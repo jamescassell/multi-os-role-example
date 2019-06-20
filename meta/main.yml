@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: James Cassell
+  description: Example role to show different vars for different distros.
+  # company: your company (optional)
+
+  license: Apache-2.0 or MIT or BSD-3-Clause
+
+  min_ansible_version: 2.4
+
+  platforms:
+dependencies: []

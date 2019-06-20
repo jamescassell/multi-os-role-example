@@ -1,0 +1,4 @@
+---
+# tasks file for multi-os-role
+- debug:
+    msg: "{{ multi_var }}"
