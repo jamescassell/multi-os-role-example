@@ -1,10 +1,17 @@
 ---
 # defaults file for multi-os-role
 
-multi_var: "{{ multi_var_default[ansible_distribution] | default(multi_var_default[ansible_os_family] | default(multi_var_default['generic'] )) }}"
-multi_var_default:
-  RedHat: "Red Hat"
-  CentOS: "Cent"
-  Ubuntu: "Ubu"
-  Debian: "Deb"
-  generic: "gen os"
+multi_var_order:
+- "{{ ansible_distribution | lower }}"
+- "{{ ansible_os_family | lower }}"
+- generic
+
+multi_var: "{{ q('vars', default=(omit+omit), *(multi_var_order | map('regex_replace', '^(.*)$', 'multi_\\1_var') | list)) | reject('==', omit + omit) | first }}"
+
+#multi_var: "{{ multi_var_default[ansible_distribution] | default(multi_var_default[ansible_os_family] | default(multi_var_default['generic'] )) }}"
+#multi_var_default:
+multi_redhat_var: "Red Hat"
+multi_centos_var: "Cent"
+multi_ubuntu_var: "Ubu"
+multi_debian_var: "Deb"
+multi_generic_var: "gen os"
